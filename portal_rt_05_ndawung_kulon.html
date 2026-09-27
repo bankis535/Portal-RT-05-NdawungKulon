@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal RT 05 / Ndawung Kulon - Media Sosial & Marketplace UMKM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icon Library CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        amber: {
+                            50: '#fffbeb',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 glass-header border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Logo & Name -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-emerald-200">
+                        <i class="fa-solid fa-tree-city"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="font-bold text-lg text-slate-900 leading-tight">RT 05 Ndawung Kulon</h1>
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-200 hidden sm:inline-block">Asri & Rukun</span>
+                        </div>
+                        <p class="text-xs text-slate-500">Portal Warga, Media Sosial & UMKM</p>
+                    </div>
+                </div>
+
+                <!-- User Status & Auth Control -->
+                <div class="flex items-center gap-3">
+                    <div id="userBadge" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border">
+                        <!-- Populated dynamically by JavaScript -->
+                    </div>
+
+                    <button id="authBtn" onclick="handleAuthAction()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl transition-all shadow-sm">
+                        <i class="fa-solid fa-right-to-bracket" id="authBtnIcon"></i>
+                        <span id="authBtnText">Masuk</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation Menu -->
+        <nav class="bg-white border-t border-slate-100 overflow-x-auto custom-scrollbar">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 sm:space-x-4">
+                <button onclick="switchTab('berita')" id="tab-berita" class="nav-tab py-3 px-3 text-xs sm:text-sm font-semibold border-b-2 border-emerald-600 text-emerald-600 flex items-center gap-2 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-bullhorn"></i> Berita & Pengumuman
+                </button>
+                <button onclick="switchTab('feeds')" id="tab-feeds" class="nav-tab py-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-emerald-600 flex items-center gap-2 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-comments"></i> Feeds Warga
+                </button>
+                <button onclick="switchTab('marketplace')" id="tab-marketplace" class="nav-tab py-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-emerald-600 flex items-center gap-2 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-store"></i> Marketplace UMKM
+                </button>
+                <button onclick="switchTab('kas')" id="tab-kas" class="nav-tab py-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-emerald-600 flex items-center gap-2 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-wallet"></i> Transparansi Kas RT
+                </button>
+                <button onclick="switchTab('admin')" id="tab-admin" class="nav-tab py-3 px-3 text-xs sm:text-sm font-medium border-b-2 border-transparent text-slate-600 hover:text-emerald-600 flex items-center gap-2 whitespace-nowrap transition-colors">
+                    <i class="fa-solid fa-sliders"></i> Panel Admin & Pengaturan
+                    <span id="adminTabBadge" class="hidden bg-amber-500 text-white text-[9px] px-1.5 py-0.5 rounded-full uppercase font-bold">Admin</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+        <!-- Banner Himbauan / Kebersihan Lingkungan -->
+        <div class="mb-6 bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-700 rounded-2xl p-5 text-white shadow-lg relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 opacity-15 text-9xl">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+            </div>
+            <div class="relative z-10 max-w-2xl">
+                <div class="flex items-center gap-2 text-emerald-200 text-xs font-bold uppercase tracking-wider mb-1">
+                    <i class="fa-solid fa-shield-halved"></i> Lingkungan Aman & Clean Energy RT 05
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold mb-2">Selamat Datang di Portal Warga Ndawung Kulon!</h2>
+                <p class="text-xs sm:text-sm text-emerald-100 leading-relaxed mb-3">
+                    Mari saling menjaga kebersihan saluran air, aktif kegiatan pos ronda malam, serta dukung produk usaha mikro milik tetangga sendiri.
+                </p>
+                <div class="flex flex-wrap gap-2 text-xs">
+                    <span class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 flex items-center gap-1.5">
+                        <i class="fa-solid fa-broom text-emerald-300"></i> Kerja Bakti Rutin: Pekan ke-2
+                    </span>
+                    <span class="bg-white/10 hover:bg-white/20 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 flex items-center gap-1.5">
+                        <i class="fa-solid fa-person-shelter text-emerald-300"></i> Pos Ronda: 22.00 - 04.00 WIB
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 1: BERITA & PENGUMUMAN RT -->
+        <section id="sec-berita" class="tab-content space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-newspaper text-emerald-600"></i> Berita & Agenda RT 05
+                    </h2>
+                    <p class="text-xs text-slate-500">Informasi resmi, agenda gotong royong, dan kabar lingkungan terbaru</p>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <div class="relative flex-1 sm:w-64">
+                        <input type="text" id="searchNews" oninput="renderNews()" placeholder="Cari berita atau agenda..." class="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                    </div>
+                    <button id="addNewsBtn" onclick="openModal('modalAddNews')" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 shrink-0 transition-colors">
+                        <i class="fa-solid fa-plus"></i> Tambah Berita
+                    </button>
+                </div>
+            </div>
+
+            <!-- News Grid -->
+            <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Dynamic Content via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 2: FEEDS / MEDIA SOSIAL WARGA -->
+        <section id="sec-feeds" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column: Post Creator & Stream -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Create Post Box -->
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div id="feedUserAvatar" class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div>
+                                <h3 id="feedUserName" class="text-sm font-bold text-slate-800">Warga RT 05</h3>
+                                <p class="text-xs text-slate-500">Bagikan kabar, kegiatan, atau foto lingkungan</p>
+                            </div>
+                        </div>
+                        <textarea id="postContent" rows="3" placeholder="Apa kabar lingkungan RT 05 hari ini? Berikan apresiasi atau kabar kegiatan..." class="w-full p-3 text-sm rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:outline-none resize-none"></textarea>
+                        
+                        <!-- Image URL input toggle -->
+                        <div id="imageInputBox" class="hidden">
+                            <input type="url" id="postImageUrl" placeholder="Masukkan URL Foto (contoh: https://images.unsplash.com/...)" class="w-full p-2.5 text-xs rounded-lg border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-100">
+                            <button onclick="toggleImageInput()" type="button" class="text-xs text-slate-600 hover:text-emerald-600 font-medium flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-slate-50">
+                                <i class="fa-regular fa-image text-emerald-600"></i> Lampirkan Foto
+                            </button>
+                            <button onclick="createFeedPost()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-all shadow-sm">
+                                <i class="fa-solid fa-paper-plane mr-1"></i> Postings Warga
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Feed Posts List -->
+                    <div id="feedStream" class="space-y-4">
+                        <!-- Dynamic Content via JS -->
+                    </div>
+                </div>
+
+                <!-- Right Column: Sidebar Community Guidelines & Events -->
+                <div class="space-y-5">
+                    <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b border-slate-100 pb-3">
+                            <i class="fa-solid fa-heart-pulse text-emerald-600"></i> Tata Tertib Lingkungan
+                        </h3>
+                        <ul class="text-xs text-slate-600 space-y-2.5">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+                                <span>Menjaga kebersihan pekarangan & memilah sampah organik/anorganik.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+                                <span>Penyampaian kritik/saran dilakukan secara sopan & kekeluargaan.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-500 mt-0.5"></i>
+                                <span>Melaporkan tamu menginap 1x24 jam kepada Ketua RT/RW.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Kontak Darurat RT -->
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 space-y-3">
+                        <h3 class="font-bold text-emerald-900 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-phone-volume text-emerald-600"></i> Kontak Penting RT 05
+                        </h3>
+                        <div class="space-y-2 text-xs">
+                            <div class="flex justify-between items-center py-1 border-b border-emerald-100">
+                                <span class="text-emerald-800 font-medium">Ketua RT (Pak Supri)</span>
+                                <a href="https://wa.me/6281234567890" target="_blank" class="text-emerald-700 font-bold hover:underline">0812-3456-7890</a>
+                            </div>
+                            <div class="flex justify-between items-center py-1 border-b border-emerald-100">
+                                <span class="text-emerald-800 font-medium">Koordinator Keamanan</span>
+                                <a href="https://wa.me/6281987654321" target="_blank" class="text-emerald-700 font-bold hover:underline">0819-8765-4321</a>
+                            </div>
+                            <div class="flex justify-between items-center py-1">
+                                <span class="text-emerald-800 font-medium">Pos Ronda Gardu 05</span>
+                                <span class="text-emerald-700 font-bold">Siaga 24 Jam</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: MARKETPLACE UMKM -->
+        <section id="sec-marketplace" class="tab-content hidden space-y-6">
+            <!-- Header Filter & Add Product -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-shop text-emerald-600"></i> Marketplace UMKM Ndawung Kulon
+                    </h2>
+                    <p class="text-xs text-slate-500">Dukung perekonomian warga dengan membeli produk lokal RT 05</p>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                    <select id="productCatFilter" onchange="renderProducts()" class="text-xs p-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <option value="Semua">Semua Kategori</option>
+                        <option value="Makanan & Minuman">Makanan & Minuman</option>
+                        <option value="Kerajinan">Kerajinan & Craft</option>
+                        <option value="Jasa">Jasa & Servis</option>
+                        <option value="Pertanian/Tanaman">Tanaman & Pertanian</option>
+                    </select>
+
+                    <button onclick="openModal('modalAddProduct')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors shadow-sm ml-auto">
+                        <i class="fa-solid fa-plus-circle"></i> Tambah Produk Saya
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Dynamic Content via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 4: KAS RT TRANSPARAN -->
+        <section id="sec-kas" class="tab-content hidden space-y-6">
+            <!-- Balance Overview Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-vault"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Total Saldo Kas RT</p>
+                        <h3 id="kasTotalSaldo" class="text-xl font-extrabold text-emerald-700">Rp 0</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-arrow-down-left"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Total Pemasukan</p>
+                        <h3 id="kasTotalMasuk" class="text-lg font-bold text-slate-800">Rp 0</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-arrow-up-right"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Total Pengeluaran</p>
+                        <h3 id="kasTotalKeluar" class="text-lg font-bold text-slate-800">Rp 0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Header & Add Button -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base">Riwayat Transaksi Kas RT 05</h3>
+                        <p class="text-xs text-slate-500">Laporan iuran kebersihan, keamanan, dan belanja kebutuhan warga</p>
+                    </div>
+                    <button id="addKasBtn" onclick="openModal('modalAddKas')" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+                        <i class="fa-solid fa-plus"></i> Catat Transaksi Kas
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200">
+                                <th class="p-4">Tanggal</th>
+                                <th class="p-4">Jenis</th>
+                                <th class="p-4">Keterangan</th>
+                                <th class="p-4">Kategori</th>
+                                <th class="p-4 text-right">Jumlah</th>
+                                <th id="kasActionTh" class="p-4 text-center hidden">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kasTableBody" class="divide-y divide-slate-100 text-xs">
+                            <!-- Dynamic Content via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: PANEL ADMIN & PENGATURAN -->
+        <section id="sec-admin" class="tab-content hidden space-y-6">
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 text-lg shadow-sm">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h2 class="font-bold text-amber-900 text-base">Panel Pengurus & Pengaturan Sistem</h2>
+                    <p class="text-xs text-amber-800 mt-0.5">
+                        Khusus Pengurus RT 05 / Admin. Anda dapat mengelola password warga & admin, mengedit berita, memoderasi postingan & produk UMKM.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Change Password Form -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b border-slate-100 pb-3">
+                        <i class="fa-solid fa-key text-emerald-600"></i> Pengaturan Password Akses Portal
+                    </h3>
+                    
+                    <!-- Form Ganti Password Warga -->
+                    <div class="p-4 bg-slate-50 rounded-xl space-y-2 border border-slate-200">
+                        <label class="text-xs font-semibold text-slate-700 block">Password Baru "Akses Warga":</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="newWargaPass" placeholder="Password Warga Baru" class="flex-1 p-2 text-xs rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <button onclick="updatePassword('warga')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+                                Simpan Warga
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-slate-500">Password default awal: <code class="bg-slate-200 px-1 py-0.5 rounded text-slate-700">warga05</code></p>
+                    </div>
+
+                    <!-- Form Ganti Password Admin -->
+                    <div class="p-4 bg-slate-50 rounded-xl space-y-2 border border-slate-200">
+                        <label class="text-xs font-semibold text-slate-700 block">Password Baru "Akses Admin / RT":</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="newAdminPass" placeholder="Password Admin Baru" class="flex-1 p-2 text-xs rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <button onclick="updatePassword('admin')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
+                                Simpan Admin
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-slate-500">Password default awal: <code class="bg-slate-200 px-1 py-0.5 rounded text-slate-700">admin05</code></p>
+                    </div>
+                </div>
+
+                <!-- Quick Stats & Reset Data -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
+                    <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2 border-b border-slate-100 pb-3">
+                        <i class="fa-solid fa-chart-pie text-emerald-600"></i> Ringkasan Statistik Portal
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 text-center">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <p class="text-2xl font-bold text-emerald-600" id="statNewsCount">0</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Berita & Agenda</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <p class="text-2xl font-bold text-emerald-600" id="statFeedsCount">0</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Postings Feeds</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <p class="text-2xl font-bold text-emerald-600" id="statProductsCount">0</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Produk UMKM</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <p class="text-2xl font-bold text-emerald-600" id="statKasCount">0</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Catatan Kas</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100">
+                        <button onclick="resetDataToDefault()" class="w-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-semibold text-xs py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-rotate-left"></i> Reset Semua Data ke Default Bawaan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-1">
+            <p class="font-medium text-slate-700">Portal Digital RT 05 / Ndawung Kulon - Guyub Rukun Tumbuh Bersama</p>
+            <p>© 2026 Pengurus RT 05. Sistem Komunitas Warga & Marketplace Lokal.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: LOGIN MODAL (DUAL PASSWORD) -->
+    <div id="modalLogin" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl space-y-6 relative border border-slate-100">
+            <button onclick="closeModal('modalLogin')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-inner">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Masuk ke Portal RT 05</h3>
+                <p class="text-xs text-slate-500">Pilih tingkat akses dan masukkan password untuk melanjutkan</p>
+            </div>
+
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <!-- Role Selector Radio Tabs -->
+                <div class="grid grid-cols-2 gap-2 bg-slate-100 p-1 rounded-xl">
+                    <label class="cursor-pointer">
+                        <input type="radio" name="loginRole" value="warga" checked onchange="updateLoginRoleHint()" class="peer hidden">
+                        <div class="py-2 text-center text-xs font-semibold rounded-lg text-slate-600 peer-checked:bg-white peer-checked:text-emerald-700 peer-checked:shadow-sm transition-all">
+                            <i class="fa-solid fa-user mr-1"></i> Warga RT
+                        </div>
+                    </label>
+                    <label class="cursor-pointer">
+                        <input type="radio" name="loginRole" value="admin" onchange="updateLoginRoleHint()" class="peer hidden">
+                        <div class="py-2 text-center text-xs font-semibold rounded-lg text-slate-600 peer-checked:bg-white peer-checked:text-amber-700 peer-checked:shadow-sm transition-all">
+                            <i class="fa-solid fa-user-gear mr-1"></i> Admin / RT
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Password Input -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Password Akses:</label>
+                    <div class="relative">
+                        <input type="password" id="loginPasswordInput" required placeholder="Masukkan password..." class="w-full pl-3 pr-10 py-2.5 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <button type="button" onclick="togglePasswordVisibility('loginPasswordInput', 'eyeIcon')" class="absolute right-3 top-3 text-slate-400 hover:text-slate-600">
+                            <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Default Password Helper Hint -->
+                <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs space-y-1">
+                    <div class="font-bold text-emerald-900 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-info"></i> Petunjuk Password Default:
+                    </div>
+                    <ul class="text-[11px] text-emerald-800 space-y-0.5 list-disc list-inside">
+                        <li>Akses Warga: <code class="bg-emerald-200 px-1 py-0.5 rounded font-bold">warga05</code></li>
+                        <li>Akses Admin: <code class="bg-emerald-200 px-1 py-0.5 rounded font-bold">admin05</code></li>
+                    </ul>
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-3 rounded-xl transition-all shadow-md shadow-emerald-200">
+                    Masuk Sekarang
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: ADD / EDIT NEWS -->
+    <div id="modalAddNews" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 relative">
+            <button onclick="closeModal('modalAddNews')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800">Tambah Berita / Pengumuman RT</h3>
+            <form onsubmit="saveNewsSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Judul Berita/Pengumuman</label>
+                    <input type="text" id="newsTitle" required placeholder="Contoh: Kerja Bakti Massal Sambut HUT RI" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-xs">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Kategori</label>
+                        <select id="newsCategory" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <option value="Agenda">Agenda Warga</option>
+                            <option value="Pengumuman">Pengumuman Resmi</option>
+                            <option value="Kebersihan">Kebersihan & Sehat</option>
+                            <option value="Keamanan">Keamanan & Pos Ronda</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Tanggal Kegiatan/Rilis</label>
+                        <input type="text" id="newsDate" required placeholder="Contoh: Minggu, 12 Okt 2026" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Isi Berita Lengkap</label>
+                    <textarea id="newsContent" rows="4" required placeholder="Tuliskan rincian agenda, lokasi, atau himbauan..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition-colors">
+                    Publikasikan Berita
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: ADD UMKM PRODUCT -->
+    <div id="modalAddProduct" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 relative">
+            <button onclick="closeModal('modalAddProduct')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800">Daftarkan Produk UMKM Warga</h3>
+            <form onsubmit="saveProductSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Nama Produk / Jasa</label>
+                    <input type="text" id="prodName" required placeholder="Contoh: Keripik Tempe Mendoan Bu Sumi" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Kategori</label>
+                        <select id="prodCategory" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <option value="Makanan & Minuman">Makanan & Minuman</option>
+                            <option value="Kerajinan">Kerajinan & Craft</option>
+                            <option value="Jasa">Jasa & Servis</option>
+                            <option value="Pertanian/Tanaman">Tanaman & Pertanian</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Harga (Rupiah)</label>
+                        <input type="number" id="prodPrice" required placeholder="15000" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Nama Penjual / Pemilik</label>
+                        <input type="text" id="prodSeller" required placeholder="Bu Sumi (Rumah No. 12)" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Nomor WhatsApp (Contoh: 08123456789)</label>
+                        <input type="text" id="prodPhone" required placeholder="08123456789" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">URL Foto Produk (Opsional)</label>
+                    <input type="url" id="prodImage" placeholder="https://images.unsplash.com/photo-..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Deskripsi Singkat Produk</label>
+                    <textarea id="prodDesc" rows="2" placeholder="Sebutkan varian rasa, keunggulan, atau jam buka..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition-colors">
+                    Simpan & Tampilkan Produk
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 4: ADD CASH ENTRY -->
+    <div id="modalAddKas" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 relative">
+            <button onclick="closeModal('modalAddKas')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-800">Catat Transaksi Kas RT</h3>
+            <form onsubmit="saveKasSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Jenis Transaksi</label>
+                    <select id="kasType" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <option value="in">Pemasukan (+)</option>
+                        <option value="out">Pengeluaran (-)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Keterangan Transaksi</label>
+                    <input type="text" id="kasDesc" required placeholder="Contoh: Iuran Bulanan Warga / Pembelian Lampu Jalan" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="font-semibold text-slate-700 block mb-1">Jumlah (Rupiah)</label>
+                    <input type="number" id="kasAmount" required placeholder="100000" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Kategori</label>
+                        <input type="text" id="kasCategory" required placeholder="Iuran / Keamanan / Kebersihan" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Tanggal</label>
+                        <input type="text" id="kasDate" required placeholder="27 Sep 2026" class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl transition-colors">
+                    Simpan Transaksi Kas
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Toast Notification Box -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm"></div>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Default System Passwords & Storage Keys
+        const STORAGE_KEYS = {
+            PASSWORDS: 'rt05_passwords_v1',
+            SESSION: 'rt05_session_v1',
+            NEWS: 'rt05_news_v1',
+            FEEDS: 'rt05_feeds_v1',
+            PRODUCTS: 'rt05_products_v1',
+            KAS: 'rt05_kas_v1'
+        };
+
+        // Application State
+        let passwords = { warga: 'warga05', admin: 'admin05' };
+        let session = { loggedIn: false, role: 'guest', name: 'Tamu' };
+        let newsData = [];
+        let feedsData = [];
+        let productsData = [];
+        let kasData = [];
+
+        // Default Mock Data if localStorage empty
+        const defaultNews = [
+            {
+                id: 'n1',
+                title: 'Jadwal Kerja Bakti Bersih Selokan & Taman RT 05 Pekan Ini',
+                category: 'Kebersihan',
+                date: 'Minggu, 4 Oktober 2026',
+                content: 'Dihimbau seluruh bapak/ibu warga RT 05 Ndawung Kulon untuk berpartisipasi dalam kerja bakti pembersihan saluran drainase dan perapihan tanaman umum gardu mulai pukul 06.30 WIB.',
+                author: 'Pengurus RT 05'
+            },
+            {
+                id: 'n2',
+                title: 'Jadwal Pos Ronda & Sistem Keamanan Lingkungan (Siskamling)',
+                category: 'Keamanan',
+                date: 'Berlaku Mulai Oktober 2026',
+                content: 'Jadwal ronda malam kelompok 1 sampai 4 telah terbit. Setiap warga yang piket diharapkan hadir di pos ronda gardu utama pukul 22.00 WIB.',
+                author: 'Seksi Keamanan RT'
+            },
+            {
+                id: 'n3',
+                title: 'Pemisahan Sampah Organik & Anorganik Rumah Tangga',
+                category: 'Pengumuman',
+                date: '25 September 2026',
+                content: 'Dalam rangka menjaga lingkungan Ndawung Kulon yang asri, mohon warga memilah sisa makanan dan plastik pada tempat sampah terpisah sebelum diangkut petugas.',
+                author: 'Ketua RT 05'
+            }
+        ];
+
+        const defaultFeeds = [
+            {
+                id: 'f1',
+                author: 'Pak Supri (Ketua RT)',
+                role: 'admin',
+                time: '2 jam yang lalu',
+                content: 'Alhamdulillah, pengerjaan pengecatan Pos Ronda RT 05 sudah selesai 100%. Terima kasih bapak-bapak yang gotong royong kemarin malam! 🌿🛡️',
+                image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80',
+                likes: 8,
+                comments: [
+                    { author: 'Bu Sumi', text: 'Mantap Pak RT, jadi bersih dan terang!', date: '1 jam lalu' }
+                ]
+            },
+            {
+                id: 'f2',
+                author: 'Mas Joko (Warga Block B)',
+                role: 'warga',
+                time: 'Yesterday',
+                content: 'Mengingatkan bapak/ibu, besok pagi bibit cabai dan bayam segar dari kebun hidroponik RT 05 sudah panen yaa. Bisa ambil di rumah saya. 👍',
+                image: '',
+                likes: 5,
+                comments: []
+            }
+        ];
+
+        const defaultProducts = [
+            {
+                id: 'p1',
+                name: 'Keripik Tempe Mendoan Bu Sumi',
+                category: 'Makanan & Minuman',
+                price: 12000,
+                seller: 'Bu Sumi (Rumah No. 12)',
+                phone: '081234567890',
+                description: 'Keripik tempe gurih renyah tanpa pengawet. Tersedia rasa original dan pedas manis.',
+                image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=600&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 'p2',
+                name: 'Sambal Bawang Ndawung Kulon',
+                category: 'Makanan & Minuman',
+                price: 15000,
+                seller: 'Mbak Rina (Rumah No. 05)',
+                phone: '081298765432',
+                description: 'Sambal racikan rumahan dengan cabe segar dari pekarangan RT 05.',
+                image: 'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=600&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 'p3',
+                name: 'Bibit Cabai & Sawi Organik',
+                category: 'Pertanian/Tanaman',
+                price: 8000,
+                seller: 'Pak Joko (Rumah No. 21)',
+                phone: '085678901234',
+                description: 'Bibit tanaman siap tanam dalam polybag. Cocok untuk memperasri halaman rumah.',
+                image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=600&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 'p4',
+                name: 'Jasa Servis Elektronik & Pompa Air',
+                category: 'Jasa',
+                price: 50000,
+                seller: 'Pak Supri (Teknik RT 05)',
+                phone: '087812345678',
+                description: 'Melayani perbaikan kipas angin, mesin cuci, dan instalasi pipa air warga RT 05.',
+                image: ''
+            }
+        ];
+
+        const defaultKas = [
+            { id: 'k1', date: '01 Sep 2026', type: 'in', description: 'Iuran Warga Bulanan (30 KK)', amount: 1500000, category: 'Iuran Warga' },
+            { id: 'k2', date: '05 Sep 2026', type: 'out', description: 'Pembelian Cat & Lampu Pos Ronda', amount: 350000, category: 'Fasilitas' },
+            { id: 'k3', date: '12 Sep 2026', type: 'out', description: 'Konsumsi Kerja Bakti Kebersihan', amount: 150000, category: 'Kegiatan' },
+            { id: 'k4', date: '20 Sep 2026', type: 'in', description: 'Sumbangan Donatur Kas Keamanan', amount: 500000, category: 'Donasi' }
+        ];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+
+        function initApp() {
+            // Load Passwords
+            const storedPass = localStorage.getItem(STORAGE_KEYS.PASSWORDS);
+            if (storedPass) {
+                passwords = JSON.parse(storedPass);
+            } else {
+                localStorage.setItem(STORAGE_KEYS.PASSWORDS, JSON.stringify(passwords));
+            }
+
+            // Load Session
+            const storedSession = localStorage.getItem(STORAGE_KEYS.SESSION);
+            if (storedSession) {
+                session = JSON.parse(storedSession);
+            } else {
+                // Default to Warga logged in automatically for easy first test
+                session = { loggedIn: true, role: 'warga', name: 'Warga RT 05' };
+                localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+            }
+
+            // Load Data Arrays
+            newsData = JSON.parse(localStorage.getItem(STORAGE_KEYS.NEWS)) || defaultNews;
+            feedsData = JSON.parse(localStorage.getItem(STORAGE_KEYS.FEEDS)) || defaultFeeds;
+            productsData = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCTS)) || defaultProducts;
+            kasData = JSON.parse(localStorage.getItem(STORAGE_KEYS.KAS)) || defaultKas;
+
+            // Save default if first load
+            if (!localStorage.getItem(STORAGE_KEYS.NEWS)) localStorage.setItem(STORAGE_KEYS.NEWS, JSON.stringify(newsData));
+            if (!localStorage.getItem(STORAGE_KEYS.FEEDS)) localStorage.setItem(STORAGE_KEYS.FEEDS, JSON.stringify(feedsData));
+            if (!localStorage.getItem(STORAGE_KEYS.PRODUCTS)) localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(productsData));
+            if (!localStorage.getItem(STORAGE_KEYS.KAS)) localStorage.setItem(STORAGE_KEYS.KAS, JSON.stringify(kasData));
+
+            updateUIForSession();
+            renderNews();
+            renderFeeds();
+            renderProducts();
+            renderKas();
+            updateAdminStats();
+        }
+
+        function updateUIForSession() {
+            const badge = document.getElementById('userBadge');
+            const authText = document.getElementById('authBtnText');
+            const authIcon = document.getElementById('authBtnIcon');
+            const adminBadge = document.getElementById('adminTabBadge');
+            const addNewsBtn = document.getElementById('addNewsBtn');
+            const addKasBtn = document.getElementById('addKasBtn');
+            const kasActionTh = document.getElementById('kasActionTh');
+
+            if (session.loggedIn) {
+                authText.textContent = 'Keluar';
+                authIcon.className = 'fa-solid fa-right-from-bracket';
+                badge.classList.remove('hidden');
+
+                if (session.role === 'admin') {
+                    badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300';
+                    badge.innerHTML = `<i class="fa-solid fa-user-gear"></i> ${session.name}`;
+                    adminBadge.classList.remove('hidden');
+                    addNewsBtn.classList.remove('hidden');
+                    addKasBtn.classList.remove('hidden');
+                    if (kasActionTh) kasActionTh.classList.remove('hidden');
+                } else {
+                    badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300';
+                    badge.innerHTML = `<i class="fa-solid fa-user"></i> ${session.name}`;
+                    adminBadge.classList.add('hidden');
+                    addNewsBtn.classList.add('hidden');
+                    addKasBtn.classList.add('hidden');
+                    if (kasActionTh) kasActionTh.classList.add('hidden');
+                }
+            } else {
+                authText.textContent = 'Masuk Portal';
+                authIcon.className = 'fa-solid fa-right-to-bracket';
+                badge.classList.add('hidden');
+                adminBadge.classList.add('hidden');
+                addNewsBtn.classList.add('hidden');
+                addKasBtn.classList.add('hidden');
+                if (kasActionTh) kasActionTh.classList.add('hidden');
+            }
+
+            // Update feed user box
+            document.getElementById('feedUserName').textContent = session.loggedIn ? session.name : 'Tamu Warga';
+        }
+
+        function switchTab(tabName) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Reset nav tab styles
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('border-emerald-600', 'text-emerald-600');
+                btn.classList.add('border-transparent', 'text-slate-600');
+            });
+
+            // Show selected tab content
+            const activeSec = document.getElementById(`sec-${tabName}`);
+            const activeTab = document.getElementById(`tab-${tabName}`);
+
+            if (activeSec && activeTab) {
+                activeSec.classList.remove('hidden');
+                activeTab.classList.remove('border-transparent', 'text-slate-600');
+                activeTab.classList.add('border-emerald-600', 'text-emerald-600');
+            }
+
+            // Guard admin tab if not logged in as admin
+            if (tabName === 'admin' && session.role !== 'admin') {
+                showToast('Halaman Panel Admin khusus untuk Pengurus RT!', 'error');
+            }
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function togglePasswordVisibility(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fa-solid fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fa-solid fa-eye';
+            }
+        }
+
+        function handleAuthAction() {
+            if (session.loggedIn) {
+                // Logout action
+                session = { loggedIn: false, role: 'guest', name: 'Tamu' };
+                localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+                updateUIForSession();
+                showToast('Anda telah keluar dari akun.', 'info');
+                switchTab('berita');
+            } else {
+                openModal('modalLogin');
+            }
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            const role = document.querySelector('input[name="loginRole"]:checked').value;
+            const passInput = document.getElementById('loginPasswordInput').value;
+
+            const expectedPass = passwords[role];
+
+            if (passInput === expectedPass) {
+                session = {
+                    loggedIn: true,
+                    role: role,
+                    name: role === 'admin' ? 'Pengurus RT 05' : 'Warga RT 05'
+                };
+                localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+                updateUIForSession();
+                closeModal('modalLogin');
+                document.getElementById('loginPasswordInput').value = '';
+                showToast(`Berhasil masuk sebagai ${session.name}!`, 'success');
+                renderKas(); // Refresh kas view with admin actions if applicable
+            } else {
+                showToast(`Password ${role.toUpperCase()} salah! Silakan coba lagi.`, 'error');
+            }
+        }
+
+        function renderNews() {
+            const container = document.getElementById('newsGrid');
+            const query = document.getElementById('searchNews').value.toLowerCase();
+
+            const filtered = newsData.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            );
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white p-8 rounded-2xl text-center border border-slate-200">
+                        <i class="fa-solid fa-newspaper text-slate-300 text-4xl mb-2"></i>
+                        <p class="text-sm text-slate-500 font-medium">Tidak ada berita atau pengumuman ditemukan.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-full border border-emerald-200 uppercase tracking-wider">
+                                ${item.category}
+                            </span>
+                            <span class="text-[11px] text-slate-400">
+                                <i class="fa-regular fa-clock mr-1"></i>${item.date}
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-base leading-snug">${item.title}</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">${item.content}</p>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
+                        <span>Oleh: <strong class="text-slate-700">${item.author}</strong></span>
+                        ${session.role === 'admin' ? `
+                            <button onclick="deleteNews('${item.id}')" class="text-rose-600 hover:text-rose-800 font-semibold text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-trash-can"></i> Hapus
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveNewsSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('newsTitle').value;
+            const category = document.getElementById('newsCategory').value;
+            const date = document.getElementById('newsDate').value;
+            const content = document.getElementById('newsContent').value;
+
+            const newItem = {
+                id: 'n_' + Date.now(),
+                title, category, date, content,
+                author: 'Pengurus RT 05'
+            };
+
+            newsData.unshift(newItem);
+            localStorage.setItem(STORAGE_KEYS.NEWS, JSON.stringify(newsData));
+            renderNews();
+            updateAdminStats();
+            closeModal('modalAddNews');
+            showToast('Berita RT berhasil diterbitkan!', 'success');
+            
+            // Clear inputs
+            document.getElementById('newsTitle').value = '';
+            document.getElementById('newsContent').value = '';
+        }
+
+        function deleteNews(id) {
+            newsData = newsData.filter(n => n.id !== id);
+            localStorage.setItem(STORAGE_KEYS.NEWS, JSON.stringify(newsData));
+            renderNews();
+            updateAdminStats();
+            showToast('Berita telah dihapus.', 'info');
+        }
+
+        function toggleImageInput() {
+            const box = document.getElementById('imageInputBox');
+            box.classList.toggle('hidden');
+        }
+
+        function createFeedPost() {
+            if (!session.loggedIn) {
+                openModal('modalLogin');
+                return;
+            }
+
+            const content = document.getElementById('postContent').value.trim();
+            const imageUrl = document.getElementById('postImageUrl').value.trim();
+
+            if (!content) {
+                showToast('Tuliskan sesuatu untuk diposting!', 'error');
+                return;
+            }
+
+            const newPost = {
+                id: 'f_' + Date.now(),
+                author: session.name,
+                role: session.role,
+                time: 'Baru saja',
+                content,
+                image: imageUrl,
+                likes: 0,
+                comments: []
+            };
+
+            feedsData.unshift(newPost);
+            localStorage.setItem(STORAGE_KEYS.FEEDS, JSON.stringify(feedsData));
+            renderFeeds();
+            updateAdminStats();
+
+            document.getElementById('postContent').value = '';
+            document.getElementById('postImageUrl').value = '';
+            document.getElementById('imageInputBox').classList.add('hidden');
+            showToast('Postingan warga berhasil dibagikan!', 'success');
+        }
+
+        function renderFeeds() {
+            const container = document.getElementById('feedStream');
+            if (feedsData.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white p-8 rounded-2xl text-center border border-slate-200">
+                        <i class="fa-regular fa-comments text-slate-300 text-4xl mb-2"></i>
+                        <p class="text-sm text-slate-500 font-medium">Belum ada postingan warga. Jadilah yang pertama!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = feedsData.map(post => `
+                <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+                    <!-- Post Header -->
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full ${post.role === 'admin' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'} flex items-center justify-center font-bold">
+                                <i class="fa-solid ${post.role === 'admin' ? 'fa-user-gear' : 'fa-user'}"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="text-sm font-bold text-slate-800">${post.author}</h4>
+                                    ${post.role === 'admin' ? '<span class="bg-amber-100 text-amber-800 text-[9px] font-bold px-2 py-0.5 rounded-full">Pengurus RT</span>' : ''}
+                                </div>
+                                <span class="text-[11px] text-slate-400">${post.time}</span>
+                            </div>
+                        </div>
+
+                        ${session.role === 'admin' ? `
+                            <button onclick="deleteFeedPost('${post.id}')" class="text-slate-400 hover:text-rose-600 p-1">
+                                <i class="fa-solid fa-trash-can text-sm"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+
+                    <!-- Content Text & Image -->
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${post.content}</p>
+                    ${post.image ? `
+                        <div class="rounded-xl overflow-hidden max-h-80 border border-slate-100">
+                            <img src="${post.image}" alt="Feed image" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x300/10b981/ffffff?text=Foto+Warga+RT+05'">
+                        </div>
+                    ` : ''}
+
+                    <!-- Actions Bar -->
+                    <div class="flex items-center gap-4 pt-3 border-t border-slate-100 text-xs">
+                        <button onclick="likePost('${post.id}')" class="flex items-center gap-1.5 font-semibold text-slate-600 hover:text-rose-600 transition-colors">
+                            <i class="fa-regular fa-heart text-rose-500"></i> ${post.likes} Suka
+                        </button>
+                        <button onclick="toggleComments('${post.id}')" class="flex items-center gap-1.5 font-semibold text-slate-600 hover:text-emerald-600 transition-colors">
+                            <i class="fa-regular fa-comment text-emerald-600"></i> ${post.comments ? post.comments.length : 0} Komentar
+                        </button>
+                    </div>
+
+                    <!-- Comments Container -->
+                    <div id="comments_${post.id}" class="hidden space-y-3 pt-3 border-t border-slate-100 bg-slate-50 p-3 rounded-xl">
+                        <div class="space-y-2">
+                            ${(post.comments || []).map(c => `
+                                <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
+                                    <div class="flex justify-between font-bold text-slate-800 text-[11px]">
+                                        <span>${c.author}</span>
+                                        <span class="text-slate-400 font-normal">${c.date}</span>
+                                    </div>
+                                    <p class="text-slate-600 mt-1">${c.text}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Add Comment Form -->
+                        <div class="flex gap-2 pt-1">
+                            <input type="text" id="inputComment_${post.id}" placeholder="Tulis komentar..." class="flex-1 p-2 text-xs rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                            <button onclick="addComment('${post.id}')" class="bg-emerald-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-emerald-700">
+                                Kirim
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function likePost(id) {
+            const post = feedsData.find(f => f.id === id);
+            if (post) {
+                post.likes += 1;
+                localStorage.setItem(STORAGE_KEYS.FEEDS, JSON.stringify(feedsData));
+                renderFeeds();
+            }
+        }
+
+        function toggleComments(id) {
+            const el = document.getElementById(`comments_${id}`);
+            if (el) el.classList.toggle('hidden');
+        }
+
+        function addComment(id) {
+            if (!session.loggedIn) {
+                openModal('modalLogin');
+                return;
+            }
+            const input = document.getElementById(`inputComment_${id}`);
+            const text = input.value.trim();
+            if (!text) return;
+
+            const post = feedsData.find(f => f.id === id);
+            if (post) {
+                if (!post.comments) post.comments = [];
+                post.comments.push({
+                    author: session.name,
+                    text: text,
+                    date: 'Baru saja'
+                });
+                localStorage.setItem(STORAGE_KEYS.FEEDS, JSON.stringify(feedsData));
+                renderFeeds();
+                document.getElementById(`comments_${id}`).classList.remove('hidden');
+            }
+        }
+
+        function deleteFeedPost(id) {
+            feedsData = feedsData.filter(f => f.id !== id);
+            localStorage.setItem(STORAGE_KEYS.FEEDS, JSON.stringify(feedsData));
+            renderFeeds();
+            updateAdminStats();
+            showToast('Postingan berhasil dihapus.', 'info');
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('productsGrid');
+            const cat = document.getElementById('productCatFilter').value;
+
+            const filtered = productsData.filter(p => cat === 'Semua' || p.category === cat);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-white p-8 rounded-2xl text-center border border-slate-200">
+                        <i class="fa-solid fa-basket-shopping text-slate-300 text-4xl mb-2"></i>
+                        <p class="text-sm text-slate-500 font-medium">Belum ada produk UMKM untuk kategori ini.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(prod => {
+                // WhatsApp pre-filled link builder
+                const cleanPhone = prod.phone.replace(/[^0-9]/g, '');
+                const formattedPhone = cleanPhone.startsWith('0') ? '62' + cleanPhone.slice(1) : cleanPhone;
+                const waMsg = encodeURIComponent(`Halo ${prod.seller}, saya warga RT 05 tertarik membeli produk "${prod.name}" seharga Rp ${prod.price.toLocaleString('id-ID')}. Apakah masih tersedia?`);
+                const waUrl = `https://wa.me/${formattedPhone}?text=${waMsg}`;
+
+                return `
+                    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <!-- Image -->
+                            <div class="h-40 bg-slate-100 relative overflow-hidden">
+                                <img src="${prod.image || 'https://placehold.co/400x300/10b981/ffffff?text=Produk+UMKM+RT05'}" alt="${prod.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/10b981/ffffff?text=UMKM+RT+05'">
+                                <span class="absolute top-2 right-2 bg-white/90 backdrop-blur-md text-emerald-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-emerald-200">
+                                    ${prod.category}
+                                </span>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="p-4 space-y-2">
+                                <h3 class="font-bold text-slate-800 text-sm leading-snug line-clamp-1">${prod.name}</h3>
+                                <p class="text-emerald-700 font-extrabold text-base">Rp ${prod.price.toLocaleString('id-ID')}</p>
+                                <p class="text-xs text-slate-500 line-clamp-2">${prod.description || 'Tidak ada deskripsi.'}</p>
+                                <div class="text-[11px] text-slate-600 font-medium pt-1">
+                                    <i class="fa-solid fa-store text-emerald-600 mr-1"></i>${prod.seller}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Footer -->
+                        <div class="p-4 pt-0 space-y-2">
+                            <a href="${waUrl}" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm">
+                                <i class="fa-brands fa-whatsapp text-sm"></i> Pesan via WhatsApp
+                            </a>
+                            ${session.role === 'admin' ? `
+                                <button onclick="deleteProduct('${prod.id}')" class="w-full text-rose-600 hover:text-rose-800 font-semibold text-[11px] py-1 text-center block">
+                                    <i class="fa-solid fa-trash-can mr-1"></i> Hapus Produk (Admin)
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function saveProductSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('prodName').value;
+            const category = document.getElementById('prodCategory').value;
+            const price = parseInt(document.getElementById('prodPrice').value);
+            const seller = document.getElementById('prodSeller').value;
+            const phone = document.getElementById('prodPhone').value;
+            const image = document.getElementById('prodImage').value;
+            const description = document.getElementById('prodDesc').value;
+
+            const newProd = {
+                id: 'p_' + Date.now(),
+                name, category, price, seller, phone, image, description
+            };
+
+            productsData.unshift(newProd);
+            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(productsData));
+            renderProducts();
+            updateAdminStats();
+            closeModal('modalAddProduct');
+            showToast('Produk UMKM Anda berhasil didaftarkan!', 'success');
+
+            document.getElementById('prodName').value = '';
+            document.getElementById('prodPrice').value = '';
+            document.getElementById('prodPhone').value = '';
+        }
+
+        function deleteProduct(id) {
+            productsData = productsData.filter(p => p.id !== id);
+            localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(productsData));
+            renderProducts();
+            updateAdminStats();
+            showToast('Produk UMKM telah dihapus.', 'info');
+        }
+
+        function renderKas() {
+            let totalMasuk = 0;
+            let totalKeluar = 0;
+
+            kasData.forEach(item => {
+                if (item.type === 'in') totalMasuk += item.amount;
+                else totalKeluar += item.amount;
+            });
+
+            const totalSaldo = totalMasuk - totalKeluar;
+
+            document.getElementById('kasTotalSaldo').textContent = `Rp ${totalSaldo.toLocaleString('id-ID')}`;
+            document.getElementById('kasTotalMasuk').textContent = `Rp ${totalMasuk.toLocaleString('id-ID')}`;
+            document.getElementById('kasTotalKeluar').textContent = `Rp ${totalKeluar.toLocaleString('id-ID')}`;
+
+            const tbody = document.getElementById('kasTableBody');
+            tbody.innerHTML = kasData.map(item => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="p-4 text-slate-500 font-medium">${item.date}</td>
+                    <td class="p-4">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${item.type === 'in' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                            ${item.type === 'in' ? 'Pemasukan' : 'Pengeluaran'}
+                        </span>
+                    </td>
+                    <td class="p-4 font-semibold text-slate-800">${item.description}</td>
+                    <td class="p-4 text-slate-500">${item.category}</td>
+                    <td class="p-4 text-right font-extrabold ${item.type === 'in' ? 'text-emerald-600' : 'text-rose-600'}">
+                        ${item.type === 'in' ? '+' : '-'} Rp ${item.amount.toLocaleString('id-ID')}
+                    </td>
+                    ${session.role === 'admin' ? `
+                        <td class="p-4 text-center">
+                            <button onclick="deleteKasEntry('${item.id}')" class="text-rose-600 hover:text-rose-800 font-semibold text-xs">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    ` : ''}
+                </tr>
+            `).join('');
+        }
+
+        function saveKasSubmit(e) {
+            e.preventDefault();
+            const type = document.getElementById('kasType').value;
+            const description = document.getElementById('kasDesc').value;
+            const amount = parseInt(document.getElementById('kasAmount').value);
+            const category = document.getElementById('kasCategory').value;
+            const date = document.getElementById('kasDate').value;
+
+            const newKas = {
+                id: 'k_' + Date.now(),
+                type, description, amount, category, date
+            };
+
+            kasData.unshift(newKas);
+            localStorage.setItem(STORAGE_KEYS.KAS, JSON.stringify(kasData));
+            renderKas();
+            updateAdminStats();
+            closeModal('modalAddKas');
+            showToast('Transaksi kas berhasil dicatat!', 'success');
+        }
+
+        function deleteKasEntry(id) {
+            kasData = kasData.filter(k => k.id !== id);
+            localStorage.setItem(STORAGE_KEYS.KAS, JSON.stringify(kasData));
+            renderKas();
+            updateAdminStats();
+            showToast('Catatan kas berhasil dihapus.', 'info');
+        }
+
+        function updatePassword(targetRole) {
+            if (session.role !== 'admin') {
+                showToast('Hanya Admin yang dapat mengedit password!', 'error');
+                return;
+            }
+
+            const inputId = targetRole === 'warga' ? 'newWargaPass' : 'newAdminPass';
+            const newPass = document.getElementById(inputId).value.trim();
+
+            if (!newPass) {
+                showToast('Password tidak boleh kosong!', 'error');
+                return;
+            }
+
+            passwords[targetRole] = newPass;
+            localStorage.setItem(STORAGE_KEYS.PASSWORDS, JSON.stringify(passwords));
+            document.getElementById(inputId).value = '';
+
+            showToast(`Password ${targetRole.toUpperCase()} berhasil diperbarui!`, 'success');
+        }
+
+        function updateAdminStats() {
+            document.getElementById('statNewsCount').textContent = newsData.length;
+            document.getElementById('statFeedsCount').textContent = feedsData.length;
+            document.getElementById('statProductsCount').textContent = productsData.length;
+            document.getElementById('statKasCount').textContent = kasData.length;
+        }
+
+        function resetDataToDefault() {
+            if (confirm('Apakah Anda yakin ingin mengembalikan seluruh data ke default bawaan awal?')) {
+                localStorage.clear();
+                initApp();
+                showToast('Seluruh data berhasil di-reset ke standar.', 'info');
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+
+            let bgClass = 'bg-slate-800 text-white';
+            let iconClass = 'fa-solid fa-circle-info text-blue-400';
+
+            if (type === 'success') {
+                bgClass = 'bg-emerald-900 text-emerald-100 border border-emerald-700';
+                iconClass = 'fa-solid fa-circle-check text-emerald-400';
+            } else if (type === 'error') {
+                bgClass = 'bg-rose-900 text-rose-100 border border-rose-700';
+                iconClass = 'fa-solid fa-triangle-exclamation text-rose-400';
+            }
+
+            toast.className = `${bgClass} p-3.5 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-2.5 transition-all duration-300 transform translate-y-2 opacity-0`;
+            toast.innerHTML = `<i class="${iconClass} text-base"></i> <span>${message}</span>`;
+
+            container.appendChild(toast);
+
+            // Animate In
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            // Animate Out & Remove
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
