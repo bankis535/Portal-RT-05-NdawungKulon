@@ -243,11 +243,11 @@
                         </h3>
                         <div class="space-y-1.5 text-slate-600">
                             <div class="flex justify-between py-1 border-b border-slate-100">
-                                <span>Pak RT Bambang</span>
+                                <span>Pak RT Suyatno</span>
                                 <a href="https://wa.me/6281234567890" target="_blank" class="text-brand-600 font-bold hover:underline">0812-3456-7890</a>
                             </div>
                             <div class="flex justify-between py-1 border-b border-slate-100">
-                                <span>Ketua Poskamling (Mas Eko)</span>
+                                <span>Ketua Poskamling (Mas ?)</span>
                                 <a href="https://wa.me/6281987654321" target="_blank" class="text-brand-600 font-bold hover:underline">0819-8765-4321</a>
                             </div>
                             <div class="flex justify-between py-1">
@@ -442,7 +442,7 @@
                 <form id="formProduct" class="space-y-3" onsubmit="handleSaveProduct(event)">
                     <div>
                         <label class="font-bold text-slate-700 block mb-1">Nama Produk / Jasa *</label>
-                        <input type="text" id="pTitle" required placeholder="Contoh: Keripik Tempe Bu Tejo" class="w-full border border-slate-300 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <input type="text" id="pTitle" required placeholder="Contoh: Keripik Gedang Bu Iramah" class="w-full border border-slate-300 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
                     </div>
                     
                     <div class="grid grid-cols-2 gap-3">
@@ -465,7 +465,7 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="font-bold text-slate-700 block mb-1">Nama Penjual *</label>
-                            <input type="text" id="pSellerName" required placeholder="Contoh: Bu Tejo Blok B" class="w-full border border-slate-300 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <input type="text" id="pSellerName" required placeholder="Contoh: Bu Iramah Gang Flamboyan " class="w-full border border-slate-300 rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
                         </div>
                         <div>
                             <label class="font-bold text-slate-700 block mb-1">No. WhatsApp *</label>
@@ -634,32 +634,32 @@
         const DEFAULT_PRODUCTS = [
             {
                 id: 'p1',
-                title: 'Keripik Tempe Renyah Bu Tejo',
+                title: 'Keripik Pohong Renyah Bu Iramah',
                 price: 12000,
                 category: 'Makanan & Minuman',
-                sellerName: 'Bu Tejo - Ndawung B3',
+                sellerName: 'Bu Iramah - Ndawung Flamboyan',
                 sellerPhone: '081234567891',
                 rating: '5.0',
                 image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&auto=format&fit=crop&q=80',
-                description: 'Keripik tempe olahan rumah tangga asli buatan Bu Tejo. Gurih, renyah tanpa pengawet. Cocok untuk lauk maupun camilan saat santai.'
+                description: 'Keripik Gedang olahan rumah tangga asli buatan Bu Iramah. Gurih, renyah tanpa pengawet. Cocok untuk camilan saat santai.'
             },
             {
                 id: 'p2',
-                title: 'Soto Ayam Kampung Ndawung',
+                title: 'Gethuk Ndawung',
                 price: 15000,
                 category: 'Makanan & Minuman',
-                sellerName: 'Warung Bu Sri RT 05',
+                sellerName: 'Warung Bu Anik RT 05',
                 sellerPhone: '081298765432',
                 rating: '4.9',
                 image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&auto=format&fit=crop&q=80',
-                description: 'Soto ayam kampung kuah bening segar dengan rempah tradisional. Sudah lengkap dengan koya gurih, telur rebus, dan sambal cabai rawit asli.'
+                description: 'Gethuk srondeng manis gurih dengan rempah tradisional. Sudah lengkap dengan kinco manis, lumer legit.'
             },
             {
                 id: 'p3',
                 title: 'Daster Batik Cap RT 05',
                 price: 45000,
                 category: 'Fashion & Pakaian',
-                sellerName: 'Mbak Rina Batik',
+                sellerName: 'Mbak Sunaroh Batik',
                 sellerPhone: '085712345678',
                 rating: '5.0',
                 image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&auto=format&fit=crop&q=80',
@@ -667,10 +667,10 @@
             },
             {
                 id: 'p4',
-                title: 'Jasa Service AC & Elektronik Mas Joko',
+                title: 'Jasa Service AC & Elektronik Mas Amin',
                 price: 75000,
                 category: 'Jasa',
-                sellerName: 'Mas Joko Elektronik',
+                sellerName: 'Mas Amin Elektronik',
                 sellerPhone: '081311223344',
                 rating: '5.0',
                 image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=500&auto=format&fit=crop&q=80',
@@ -681,7 +681,7 @@
                 title: 'Madu Murni Asli Ndawung',
                 price: 65000,
                 category: 'Sembako',
-                sellerName: 'Pak Slamet RT 05',
+                sellerName: 'Mas Gunawan Rt 05',
                 sellerPhone: '081987654321',
                 rating: '4.8',
                 image: 'https://images.unsplash.com/photo-1587049352847-81a56d773cae?w=500&auto=format&fit=crop&q=80',
@@ -692,7 +692,7 @@
         const DEFAULT_POSTS = [
             {
                 id: 'post-1',
-                author: 'Pak RT Bambang',
+                author: 'Pak RT Suyatno',
                 roleBadge: 'Ketua RT 05',
                 tag: 'Kegiatan',
                 timestamp: '2 jam yang lalu',
@@ -701,17 +701,17 @@
                 likes: 14,
                 isLiked: false,
                 comments: [
-                    { author: 'Bu Tejo', text: 'Siap Pak RT, nanti ibu-ibu siapkan teh hangat dan gorengan!' },
-                    { author: 'Mas Eko', text: 'Siap laksanakan pak, kami tim ronda siap bantu pimpin.' }
+                    { author: 'Bu Tini', text: 'Siap Pak RT, nanti ibu-ibu siapkan teh hangat dan gorengan!' },
+                    { author: 'Mas Mestari', text: 'Siap laksanakan pak, kami tim ronda siap bantu pimpin.' }
                 ]
             },
             {
                 id: 'post-2',
-                author: 'Bu RT Eni',
+                author: 'Bu RT ..',
                 roleBadge: 'Pengurus PKK',
                 tag: 'Berita',
                 timestamp: 'Yesterday at 16:30',
-                content: 'Alhamdulillah acara Pengajian Rutin Ibu-Ibu RT 05 Ndawung Kulon berjalan lancar dan penuh kehangatan. Terima kasih kepada tuan rumah Bu Tejo atas suguhannya yang nikmat.',
+                content: 'Alhamdulillah acara Pengajian Rutin Ibu-Ibu RT 05 Ndawung Kulon berjalan lancar dan penuh kehangatan. Terima kasih kepada tuan rumah Bu Muawanah atas suguhannya yang nikmat.',
                 image: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=500&auto=format&fit=crop&q=80',
                 likes: 21,
                 isLiked: false,
@@ -719,7 +719,7 @@
             },
             {
                 id: 'post-3',
-                author: 'Seksi Keamanan (Mas Eko)',
+                author: 'Seksi Keamanan (Mas ?)',
                 roleBadge: 'Ketua Poskamling',
                 tag: 'Keamanan',
                 timestamp: '2 hari lalu',
@@ -732,13 +732,13 @@
         ];
 
         const SCHEDULES = [
-            { day: 'Senin', group: 'Kelompok 1', members: 'Pak Eko (Ketua), Pak Budi, Mas Agus, Pak Toto' },
-            { day: 'Selasa', group: 'Kelompok 2', members: 'Pak Joko (Ketua), Mas Danang, Pak Tejo, Pak Hadi' },
-            { day: 'Rabu', group: 'Kelompok 3', members: 'Pak Rian (Ketua), Pak Slamet, Mas Ari, Pak Sugeng' },
-            { day: 'Kamis', group: 'Kelompok 4', members: 'Pak Bambang (Ketua), Mas Dimas, Pak Untung, Pak Yanto' },
-            { day: 'Jumat', group: 'Kelompok 5', members: 'Pak Bagus (Ketua), Mas Wahyu, Pak Tri, Mas Bayu' },
-            { day: 'Sabtu', group: 'Kelompok 6', members: 'Mas Eko (Ketua), Pak Yudi, Mas Roni, Pak Andi' },
-            { day: 'Minggu', group: 'Kelompok 7', members: 'Pak Hendra (Ketua), Mas Firman, Pak Rudi, Mas Agung' }
+            { day: 'Senin', group: 'Kelompok 1', members: 'Pak ? (Ketua), Pak Budi, Mas Agus, Pak Yuhri' },
+            { day: 'Selasa', group: 'Kelompok 2', members: 'Pak Sariman (Ketua), Mas Mestari, Pak Teguh, Pak Amat' },
+            { day: 'Rabu', group: 'Kelompok 3', members: 'Pak Surono (Ketua), Pak Slamet, Mas Aris, Pak Budiono' },
+            { day: 'Kamis', group: 'Kelompok 4', members: 'Pak Widayat (Ketua), Mas Andan, Pak Untung, Pak Yanto' },
+            { day: 'Jumat', group: 'Kelompok 5', members: 'Pak Moh (Ketua), Mas Louis, Pak Tri, Mas Muh' },
+            { day: 'Sabtu', group: 'Kelompok 6', members: 'Mas Agus (Ketua), Pak Yudi, Mas Rola, Pak Rafif' },
+            { day: 'Minggu', group: 'Kelompok 7', members: 'Pak Amin (Ketua), Mas Topo, Pak Warto, Mas Wek' }
         ];
 
         // State Management variables
